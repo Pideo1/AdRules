@@ -35,7 +35,7 @@ cat domain.txt |sed "s/^/address \//g"|sed "s/$/\/#/g" >> ./smart-dns.conf
 cat domain.txt |sed "s/^/domain:/g" > ./mosdns_adrules.txt
 cat domain.txt |sed "s/^/\+\./g" >> ./adrules_domainset.txt
 cat domain.txt |sed "s/^/DOMAIN-SUFFIX,/g" >> ./adrules.list
-cat domain.txt |sed "s/^/address=//g"|sed "s/$/\//g" >> ./dnsmasq.conf
+cat domain.txt |sed "s/^/address=//g"|sed "s/$///g" >> ./dnsmasq.conf
 
 
 python ./script/dns-script/singbox.py
@@ -47,6 +47,6 @@ chmod +x ssc
 mv adrules.list.srs adrules-singbox.srs
 
 rm ssc
-rm dns-output.txt total.txt domain.txt
+# rm dns-output.txt total.txt domain.txt
 
 exit
