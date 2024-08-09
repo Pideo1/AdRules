@@ -22,10 +22,12 @@ cat ./mod/title/dns-title.txt total.txt dns.txt | sed '/^$/d' > tmp.txt && mv tm
 echo "# Title:AdRules Quantumult X List " > qx.conf
 echo "# Title:AdRules SmartDNS List " > smart-dns.conf
 echo "# Title:AdRules List " > adrules.list
+echo "# Title:AdRules Dnsmasq List " > dnsmasq.conf
 echo "# Update: $update_time" >> qx.conf 
 echo "# Update: $update_time" >> smart-dns.conf 
 echo "# Update: $update_time" >> adrules_domainset.txt 
 echo "# Update: $update_time" >> adrules.list 
+echo "# Update: $update_time" >> dnsmasq.conf
 
 cat dns.txt |grep -vE '(@|\*)' |grep -Po "(?<=\|\|).+(?=\^)" | grep -v "\*" > ./domain.txt
 cat domain.txt |sed 's/^/host-suffix,/g'|sed 's/$/,reject/g' >> ./qx.conf
@@ -33,6 +35,8 @@ cat domain.txt |sed "s/^/address \//g"|sed "s/$/\/#/g" >> ./smart-dns.conf
 cat domain.txt |sed "s/^/domain:/g" > ./mosdns_adrules.txt
 cat domain.txt |sed "s/^/\+\./g" >> ./adrules_domainset.txt
 cat domain.txt |sed "s/^/DOMAIN-SUFFIX,/g" >> ./adrules.list
+cat domain.txt |sed "s/^/address=//g"|sed "s/$/\//g" >> ./dnsmasq.conf
+
 
 python ./script/dns-script/singbox.py
 python ./script/dns-script/surge.py
